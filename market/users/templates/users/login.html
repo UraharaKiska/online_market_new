@@ -3,8 +3,20 @@
 
 {% block content %}
 
+<div class="form-page">    
 
-<h1> Log In</h1> 
-
-
+<div class="form">    
+    <h1 class="form-title"> Sign Up</h1>
+    <!-- <div class="form"> -->
+        <form method="POST">
+            {% csrf_token %}
+            {% for f in form %}
+            <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}:</label>
+            {{ f }}
+            <div class="form-error">{{ f.errors }}</div>
+            {% endfor %}
+            <button class="form-button" type="submit">Sign up</button>
+        </form>
+    </div>
+</div>
 {% endblock %}

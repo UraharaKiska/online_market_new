@@ -1,10 +1,33 @@
 {% extends 'product/base.html' %}
+{% load static %}
+
 
 
 {% block content %}
+<div class="main">
+    
+    <div class="left-bar">
 
+    </div>
 
-<h1> Content</h1> 
+    <div class="content-main">
 
+        hui
 
-{% endblock %}
+    </div>
+
+    <div class="right-bar">
+        <div class="header-search">
+            <form class="search">
+                <label class="search-label">
+                    <img class="search-icon" src="{% static 'product/images/search.png' %}" alt="Search">
+                    <input class="search-input" type="text" placeholder="Search">
+                </label>
+            </form>
+        </div>
+        
+    </div>
+    
+    
+</div>
+    {% endblock %}

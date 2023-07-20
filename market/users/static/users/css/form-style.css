@@ -61,5 +61,6 @@
 
 .form-button:focus,
 .form-button:hover {
-    background-color: rgb(40, 172, 128);
+    background-color: rgb(39, 151, 114);
+    /* font-size: 40px; */
 }
