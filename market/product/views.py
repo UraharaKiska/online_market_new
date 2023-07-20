@@ -4,5 +4,12 @@ from django.shortcuts import render
 # Create your views here.
 
 
-def index(request):
-    return HttpResponse("Hello")
+def Content(request):
+    return render(request, 'product/content.html')
+
+def ContactUs(request):
+    return render(request, 'product/contact.html')
+
+def AboutPage(request):
+    return render(request, 'product/content.html')
+

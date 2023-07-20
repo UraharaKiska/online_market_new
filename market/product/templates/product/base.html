@@ -1,0 +1,51 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" href="{% static 'product/css/style.css' %}" rel="stylesheet" />
+    <link type="text/css" href="{% static 'users/css/form-style.css' %}" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <title>{{ title }}</title>
+
+</head>
+<body>
+
+    <header>
+        <div class="logo-site">
+            <a href="#"><img class="main-logo" src="../../static/product/images/logo.png" alt="logo"></a>
+        </div>
+        <nav>
+            <div class="navbar">
+                <div class="drop">
+                    <button class="nav-btn">&#9776;</button>
+                    <div class="nav-list">
+                        <!-- <div class="left"> -->
+                            <a href ="{% url 'home' %}">Main page</a>
+                        <!-- </div> -->
+                        <!-- <a href ="#"></a> -->
+                        <!-- <div class="right">/ -->
+                            <a href ="{% url 'contact' %}">Contact us</a>
+                            <a href ="{% url 'register' %}">Sign Up</a>
+                            <a href ="{% url 'login' %}">Log In</a>
+                        <!-- </div> -->
+                    </div>
+                </div>
+        
+            </div>
+        
+        </nav>
+    </header>
+
+
+    
+        {% block content %}
+        {% endblock %}
+    
+</body>
+</html>
