@@ -30,7 +30,7 @@ class ProductListShow(ListView):
     
     
     def get_queryset(self):
-        return Product.objects.filter(available=True).select_related('product_type')
+        return ProductPhoto.objects.select_related('id_product').distinct('id_product')
     
     
 class ProductType(ListView):
@@ -42,3 +42,4 @@ class ProductType(ListView):
 
     def get_queryset(self):
         return Product.objects.filter(product__slug=self.kwargs['product_type_slug'], available=True).select_related('product_type')
+

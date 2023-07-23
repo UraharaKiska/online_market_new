@@ -14,5 +14,6 @@ urlpatterns = [
     path('product/<slug:product_slug>/', ShowProduct.as_view(), name='post'),
     path('product_type/<slug:product_type_slug>', ProductType.as_view(), name='product_type'),
     
-
+    
 ]
+

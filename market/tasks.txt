@@ -1,0 +1,10 @@
+-create users model +
+-create user registration from +
+-create user login form +
+
+
+-create product model -
+-create product_type model -
+-create photo model -
+-create product_view class or function -
+
