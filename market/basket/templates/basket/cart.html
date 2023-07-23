@@ -1,0 +1,113 @@
+{% extends 'product/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<section class="container">
+    <div class="section-cart__header">
+        <div class="container-cart">
+            <h1 class="title-1">Bascket of product</h1>
+        </div>
+    </div>
+    <div class="section-cart__body">
+        <div class="container-cart">
+            <section class="cart">
+                <header class="cart-header">
+                    <div class="cart-header__name">Name</div>
+                    <div class="cart-header__count">Count</div>
+                    <div class="cart-header__price">Price</div>
+                </header>
+                <section class="product-cart">
+                    <div class="product-cart__img">
+                        IMG
+                    </div>
+                    <div class="product-cart__title">
+                        MONSTER
+                    </div>
+                    <div class="product-cart__count">
+
+
+                        <div class="count">
+                            <div class="count__box">
+                                <input type="number" class="count__input" min="1" max="100" value="1">
+                            </div>
+                            <div class="count__controls">
+                                <button type="button" class="count__up">
+                                    +
+                                </button>
+                                <button class="count__down">
+                                    -
+                                </button>
+                            </div>
+                        
+
+                        </div>
+
+                        
+                    </div>
+                    <div class="product-cart__price">
+                        1000 P
+                    </div>
+                    <div class="product-cart__controls">
+                        <form method="GET">
+                            <button type="submit"> DEL</button>
+                        </form>
+                    </div>
+                </section>
+
+                <section class="product-cart">
+                    <div class="product-cart__img">
+                        IMG
+                    </div>
+                    <div class="product-cart__title">
+                        MONSTER
+                    </div>
+                    <div class="product-cart__count">
+
+
+                        <div class="count">
+                            <div class="count__box">
+                                <input type="number" class="count__input" min="1" max="100" value="1">
+                            </div>
+                            <div class="count__controls">
+                                <button type="button" class="count__up">
+                                    +
+                                </button>
+                                <button class="count__down">
+                                    -
+                                </button>
+                            </div>
+                        
+
+                        </div>
+
+                        
+                    </div>
+                    <div class="product-cart__price">
+                        1000 P
+                    </div>
+                    <div class="product-cart__controls">
+                        <form method="GET">
+                            <button type="submit"> DEL</button>
+                        </form>
+                    </div>
+                </section>
+                
+
+                <section class="product"></section>
+                <footer class="cart-footer">
+                    <div class="cart-footer__count">3 count</div>
+                    <div class="cart-footer__price">11500 R</div>
+                </footer>
+
+            </section>
+        </div>
+    </div>
+</section>
+
+
+ 
+
+
+{% endblock %}

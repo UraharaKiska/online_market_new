@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'product.apps.ProductConfig',
     'users.apps.UsersConfig',
+    'basket.apps.BasketConfig',
+
     
     # 'users.apps.UsersConfig',
 

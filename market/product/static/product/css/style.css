@@ -33,23 +33,37 @@ body{
 
 
 
-.nav-list {
+.nav-list{
     display: flex;
-    justify-content: center;
+    /* flex-basis: 50px; */
+    width: 90%;
+    margin: auto;
+    white-space: nowrap;
+
 }
 
-.nav-list a {
-    display: block;
+.nav-list > a {
+    /* flex-basis: 50px; */
+    /* width: 100px; */
     padding: 19px;
     text-decoration: none;
     color: black;
     transition: 0.3s;
+    
 }
 
 .nav-list a:hover {
     color: rgb(53, 52, 52);
     font-size: 20px; 
 }
+
+.login-href,
+.signup-href {
+    /* display: block; */
+    /* margin: auto; */
+   
+}
+
 
 .nav-btn {
     display: none;
@@ -133,17 +147,11 @@ body{
 
 .main {
     display: flex;
+    width: 100%;
 
 }
 
-.left-bar {
-
-    margin: 10px 15px 20px 20px;
-    width: 252px;
-    height: 100vh;
-    background-color: rgb(156, 213, 218);
-
-}
+e
 
 .product-content-list {
     margin: 10px 15px 20px 20px;
@@ -163,7 +171,7 @@ body{
     border-radius: 4px;
     position: relative;
     transition: 0.3s;
-    margin: 10px 10px 10px 10px;
+    margin: 20px 20px 20px 20px;
 }
 
 .card:hover {
@@ -225,7 +233,7 @@ body{
 }
 
 .card-price {
-    width: 50%;
+    width: 100%;
 }
 
 .card-price::after {
@@ -238,6 +246,7 @@ body{
     font-size: 20px;
     color: rgb(49, 42, 73);
     display: flex;
+    justify-content: left;
     flex-wrap: wrap-reverse;
 }
 
@@ -249,12 +258,13 @@ body{
     justify-content: flex-end;
 }
 
-.card-price--discount::before {
-    content: "With the price";
+
+/* .card-price--discount::before {
+    content: "Discount";
     font-weight: 500;
     font-size: 14px;
     color: rgb(115, 113, 113);
-}
+} */
 
 
 .card-title  {
@@ -291,4 +301,23 @@ body{
 .card-btn:hover {
     background-color: rgb(99, 194, 95);
     color: white;
+}
+
+.container {
+    width: 100%;
+    max-width: 1350px;
+    padding: 0 15px;
+    margin: 0 auto;
+    
+}
+
+.container-cards {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, 250px);
+    justify-content: center;
+    justify-items: center;
+    margin: 0 auto;
+    column-gap: 30px;
+    row-gap: 40px;
 }

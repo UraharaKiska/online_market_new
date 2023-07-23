@@ -4,20 +4,20 @@
 
 
 {% block content %}
-<div class="main">
-    
+
+<!--     
     <div class="left-bar">
-    </div>
+    </div>  -->
     <section class="cards">
 
-        <div class="conteiner contreiner-cards">
+        <div class="container container-cards">
             
             
             {% for p in products %}
             
             <div class="card">
                 <div class="card-top">
-                    <a href="#" class="card-img">
+                    <a href="{{ p.id_product.get_absolute_url }}" class="card-img">
                         {% if p.photo %}
                         <img class="card-image" src="{{ p.photo.url }}"  alt="{{p.name}}">
                         {% endif %}
@@ -39,13 +39,12 @@
                 <button class="card-btn">To cart</button>
             </div>
             
-            
             {% endfor %}
             
+        </div>   
             
-        </div>
     </section>
-    <div class="right-bar">
+    <!-- <div class="right-bar">
         <div class="header-search">
             <form class="search">
                 <label class="search-label">
@@ -53,10 +52,6 @@
                     <input class="search-input" type="text" placeholder="Search">
                 </label>
             </form>
-        </div>
-        
-    </div>
-    
-    
-</div>
+        </div>   
+    </div> -->
     {% endblock %}

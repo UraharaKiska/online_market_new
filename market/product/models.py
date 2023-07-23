@@ -33,7 +33,7 @@ class Product_type(models.Model):
     slug = models.SlugField(max_length=120, unique=True, db_index=True, verbose_name='URL')
     
     def get_absolute_url(self):
-        return reverse('type', kwargs={'type_slug': self.slug})
+        return reverse('type', kwargs={'product_type_slug': self.slug})
 
     def __str__(self):
             return self.name
@@ -45,7 +45,7 @@ class Product_type(models.Model):
         
 class ProductPhoto(models.Model):
     id_product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    photo = models.ImageField(upload_to="photos/photo_product/%Y/%m/%d", null=True, verbose_name='photo')
+    photo = models.ImageField(upload_to="photo_product/%Y/%m/%d", null=True, verbose_name='photo')
     date_add = models.DateTimeField(auto_now_add=True)
     date_update = models.DateTimeField(auto_now=True)
     

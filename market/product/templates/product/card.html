@@ -1,0 +1,50 @@
+{% extends 'product/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+
+{% for p in product %}
+
+{% if forloop.first %}
+
+
+<div class="product-page">
+    <div class="product-top-image">
+        <img class="product-image" src="{{ p.photo.url }}"  alt="">
+    </div>
+
+    <h1 class="product-title"> {{ p.id_product.name }} </h1>
+
+    <div class="product-botom">
+        <div class="product-prices">
+            {% if p.id_product.new_price %}
+                <div class="product-price product-price--discount">          
+                    {{ p.id_product.new_price }}
+                </div>
+                <div class="product-price product-price--with-discount">
+                    {{ p.id_product.old_price }}
+                </div>
+            {% else %}
+                <div class="product-price product-price--common">
+                    {{ p.id_product.old_price }}
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+
+    <button class="card-btn">To cart</button>
+    <div class="product-description">
+        <p class="description-title"> Description: </p>
+        <p class="description"> {{ p.id_product.description }}</p>
+    </div>
+</div>
+
+    {% endif  %}
+    {% endfor %}
+    
+{% endblock %}
