@@ -165,7 +165,9 @@
 
 }
 
-
+.image-cart-product {
+    height: 120px;
+}
 
 @media (max-width: 600px) {
     .cart-header {
@@ -223,6 +225,12 @@
         grid-template-columns: 1fr;
         row-gap: 10px;
     }
+}
+
+
+.tags {
+    display: none;
+    background-color: brown;
 }
 
 

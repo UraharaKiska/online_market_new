@@ -31,12 +31,18 @@
                         <div class="card-price card-price--discount">          
                             {{ p.id_product.new_price }}
                         </div>
-                        {% endif %}
+                        <div class="card-price card-price--common with-discount">{{ p.id_product.old_price }}</div>
+                        {% else %}
                         <div class="card-price card-price--common">{{ p.id_product.old_price }}</div>
+                        {% endif %}
+
                     </div>
                 </div>
                 <a href="#" class="card-title">{{ p.id_product.name }}</a>
-                <button class="card-btn">To cart</button>
+                <a href="{% url 'basket_add' p.id_product.id %}"> 
+                    <button class="card-btn">To cart</button>
+                </a>
+                
             </div>
             
             {% endfor %}

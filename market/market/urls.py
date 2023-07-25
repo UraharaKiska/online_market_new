@@ -7,8 +7,10 @@ from basket import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('product/', include('product.urls')),
-    path('cart/', views.basket_view, name="basket"),
+    path('cart/', include('basket.urls')),   
+    path('', include('product.urls')),
+    path('users/', include('users.urls')),
+    
     
 
 ]

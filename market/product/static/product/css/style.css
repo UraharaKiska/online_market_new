@@ -58,7 +58,7 @@ body{
 }
 
 .login-href,
-.signup-href {
+.signup-href* {
     /* display: block; */
     /* margin: auto; */
    
@@ -258,7 +258,9 @@ e
     justify-content: flex-end;
 }
 
-
+.with-discount {
+    text-decoration: line-through;
+}
 /* .card-price--discount::before {
     content: "Discount";
     font-weight: 500;
