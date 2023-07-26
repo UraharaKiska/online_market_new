@@ -15,6 +15,8 @@
             {{ f }}
             <div class="form-error">{{ f.errors }}</div>
             {% endfor %}
+            <a href="{% url 'password_reset' %}"><i>Forgot Password?</i></a>
+            {% comment %} <a href="{% url 'social:begin' 'github' %}" class="github-login">Sign in with GitHub</a> {% endcomment %}
             <button class="form-button" type="submit">Sign up</button>
         </form>
     </div>
