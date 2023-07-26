@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def basket_view(request):
-    baskets = Shoping_cart.objects.select_related('id_product').filter(id_user=request.user)
+    baskets = Shoping_cart.objects.filter(id_user=request.user).order_by("-date_create").select_related('id_product')
     context = {
         'products': baskets,
     }

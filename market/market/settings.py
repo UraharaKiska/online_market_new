@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'product.apps.ProductConfig',
     'users.apps.UsersConfig',
     'basket.apps.BasketConfig',
+    'django_cleanup.apps.CleanupConfig',
 
     
     # 'users.apps.UsersConfig',

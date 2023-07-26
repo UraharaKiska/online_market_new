@@ -1,0 +1,82 @@
+{% extends 'product/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<link type="text/css" href="{% static 'users/css/profile.css' %}" rel="stylesheet" />
+
+<header class="header__personal-page">
+    <h2 class="profile"> Profile</h1>
+</header>
+
+<div class="body-profile">
+    {% if messages %}
+    <ul class="messages" id="messages">
+        {% for message in messages %}
+        <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %} id="message"> {{ message }} </li>
+        {% endfor %}
+    </ul>
+    <script>
+        var message_ele = document.getElementById("messages");
+        setTimeout(function(){ 
+        message_ele.style.display = "none"; 
+        }, 3000);
+    </script>
+    {% endif %}
+
+    <div class="form-profile">   
+        <form class="user-personal-page" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-profile__container">
+                    {% for f in user_form %}
+                    
+                    {% if forloop.first %}
+                    <div class="profile-img">
+                        {% if user.photo %}
+                            <img class="profimg" src="{{ user.photo.url }} " alt="HUI">
+
+                            
+                        {% else %}
+                            <img class="defoult-profile-images" src="{% static 'users/images/defoult-profile.jpg' %}" alt="HUI">
+                        {% endif %}
+                    </div>
+                    <div class="image-field">
+                        <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}:</label>
+                        {{ f }}
+                    </div>
+
+                    {% else %}
+
+                    <div class="form-data">
+                        <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}:</label>
+                        {{ f }}
+                    </div>
+                    <div class="form-error">{{ f.errors }}</div>
+                    {% endif %}
+
+                    {% endfor %}
+                    <div class="buttons-form">
+                        <button type="reset" class="form-button__reset">Reset</button>
+                        <button class="form-button__change-profile" type="submit">Save</button> 
+                    </div>
+            </div>
+                
+                
+                </div>
+            </form>
+    </div>  
+
+
+    <div class="right-bar-profile">
+
+        
+    </div>
+            
+</div>
+
+<footer class="page-down">
+
+
+</footer>
+
+{% endblock %}

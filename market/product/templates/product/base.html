@@ -33,7 +33,7 @@
                             <a href ="{% url 'contact' %}">Contact us</a>
                             {% if request.user.is_authenticated %}
                                 <a class="cart-href" href ="{% url 'basket' %}">cart</a>
-                                <a class="user-login" href ="#">{{ user.username }}</a>
+                                <a class="user-login" href ="{% url 'lk' %}">{{ user.username }}</a>
                                 <a class="logout-href" href ="{% url 'logout' %}">Log out</a>
                             {% else %}
                                 <a class="signup-href" href ="{% url 'register' %}">Sign Up</a>
