@@ -37,7 +37,7 @@ class ProductListShow(ListView):
     model = Product
     template_name = 'product/content.html'
     context_object_name = "products"
-    
+
     
     def get_queryset(self):
         return ProductPhoto.objects.select_related('id_product').distinct('id_product')
@@ -57,7 +57,6 @@ class ProductType(ListView):
 
 def show_product(request, product_slug):
     product = ProductPhoto.objects.select_related('id_product').filter(id_product__slug = product_slug)
-    
     if len(product) == 0:
         raise Http404
     

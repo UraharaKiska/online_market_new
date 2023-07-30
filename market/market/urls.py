@@ -6,10 +6,12 @@ from django.conf.urls.static import static
 from basket import views
 
 urlpatterns = [
+    path('orders/', include('orders.urls')),
     path('admin/', admin.site.urls),
     path('cart/', include('basket.urls')),   
     path('', include('product.urls')),
     path('users/', include('users.urls')),
+    
     # re_path(r'^oauth/', include('social_django.urls', namespace='social')),
     
 

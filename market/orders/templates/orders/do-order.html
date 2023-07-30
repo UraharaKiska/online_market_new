@@ -1,0 +1,41 @@
+{% extends 'product/base.html' %}
+{% load static %}
+
+{% block content %}
+<link type="text/css" href="{% static 'orders/css/orders-style.css' %}" rel="stylesheet" />
+
+<header class="orders-header">
+    <h2>Order</h2>
+</header>
+<div class="orders-list">
+        <div class="order-card">
+            <div class="orders-images-list">
+                {% for p in products %}  
+                    {% for k, v in photo.items %}
+                    {% if k == p.id_product__name %}
+                        <div class="order-images"> 
+                            <img class="order-img" id="order-img" src="{{ v.url }}" alt="{{ v.url }}">
+                            <p>{{ p.quantity }}</p>
+
+                        </div>
+
+                    {% endif %}
+                    {% endfor %}   
+                {% endfor %}   
+                </div>
+        </div>
+        <div class="confirm-order">
+            <div class="confirm-order__total-price">
+                Total price: {{ total_price }} 
+            </div>
+            <a href="{% url 'confirm-order' %}">
+                <div class="confirm-order__yes">
+                    Order
+                </div>
+            </a>
+        </div>
+</div>
+
+
+
+{% endblock %}

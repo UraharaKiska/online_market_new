@@ -5,9 +5,20 @@
 
 {% block content %}
 
-<!--     
-    <div class="left-bar">
-    </div>  -->
+
+    {% if messages %}
+    <ul class="messages" id="messages">
+        {% for message in messages %}
+        <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %} id="message"> {{ message }} </li>
+        {% endfor %}
+    </ul>
+    <script>
+        var message_ele = document.getElementById("messages");
+        setTimeout(function(){ 
+        message_ele.style.display = "none"; 
+        }, 3000);
+    </script>
+    {% endif %}
     <section class="cards">
 
         <div class="container container-cards">

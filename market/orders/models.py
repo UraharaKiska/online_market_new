@@ -23,7 +23,7 @@ class Orders_data(models.Model):
     user = models.ForeignKey(CustomUser, verbose_name="user", on_delete=models.CASCADE, null=False)
     personal_order_id = models.IntegerField(verbose_name="personal order",blank=True, null=False) # redefine savee
     full_order_id = models.CharField(verbose_name="full order_id", blank=True, unique=True, null=False)
-    status = models.ForeignKey(Order_status_types, verbose_name="status", on_delete=models.CASCADE)
+    status = models.ForeignKey(Order_status_types, verbose_name="status", on_delete=models.CASCADE, default=3)
     date_create = models.DateTimeField(auto_now_add=True) 
     date_update = models.DateTimeField(auto_now=True)
     
@@ -62,6 +62,7 @@ class Orders_inform(models.Model):
     def __str__(self):
         return self.full_order.full_order_id
 
+    
 
     class Meta:
         constraints = [

@@ -17,6 +17,23 @@ body{
     font-family: 'Raleway', sans-serif;
 }
 
+.messages {
+    display: block;
+    border: 1px;
+    border-radius: 5px;
+    margin-left: 30px;
+    margin-bottom: 30px;
+    height: 30px;
+    width: 300px;
+    background-color: rgb(86, 204, 94);
+    font-size: 17px;
+    font-weight: 800;
+    color:rgb(255, 255, 255);
+    padding-top: 10px;
+    padding-left: 7px;
+
+}
+
 .logo-site{
     background: rgb(167, 200, 247);
     width: 100%;
@@ -34,11 +51,12 @@ body{
 
 
 .nav-list{
+    transition: 1s;
+
     display: flex;
     /* flex-basis: 50px; */
     width: 90%;
     margin: auto;
-    white-space: nowrap;
 
 }
 
@@ -48,13 +66,12 @@ body{
     padding: 19px;
     text-decoration: none;
     color: black;
-    transition: 0.3s;
     
 }
 
 .nav-list a:hover {
     color: rgb(53, 52, 52);
-    font-size: 20px; 
+    text-decoration: underline rgb(106, 178, 202);
 }
 
 .login-href,
@@ -79,6 +96,7 @@ body{
         color: rgb(73, 71, 71);
         display: block;
         cursor: pointer;
+        
     }
 
     .nav-list {
@@ -86,9 +104,10 @@ body{
     }
 
     .drop:hover .nav-list {
-        display: block;
-        position: relative;
-        right: 1px;
+        transition: 1s;
+        display: flex;
+        flex-direction: column;
+        position:absolute;
         background-color: rgb(180, 205, 224);
 
     }

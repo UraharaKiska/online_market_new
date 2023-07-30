@@ -33,6 +33,8 @@
                             <a href ="{% url 'contact' %}">Contact us</a>
                             {% if request.user.is_authenticated %}
                                 <a class="cart-href" href ="{% url 'basket' %}">cart</a>
+                                <a class="orders" href="{% url 'orders' %}">Orders</a>
+
                                 <a class="user-login" href ="{% url 'lk' %}">{{ user.username }}</a>
                                 <a class="logout-href" href ="{% url 'logout' %}">Log out</a>
                             {% else %}
@@ -47,7 +49,7 @@
         
         </nav>
     </header>
-
+  
 
     
         {% block content %}

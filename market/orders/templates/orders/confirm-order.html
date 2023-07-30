@@ -1,0 +1,35 @@
+{% extends 'product/base.html' %}
+{% load static %}
+
+{% block content %}
+<link type="text/css" href="{% static 'orders/css/orders-style.css' %}" rel="stylesheet" />
+
+
+<header class="orders-header">
+    <h2>My Orders</h2>
+</header>
+<div class="orders-list">
+    <a href="#">      
+        <div class="order-card">
+            <div class="head-order-card">
+                <div class="order-date">
+                    {{ o.date_create }}
+                </div>
+            </div>
+            <div class="orders-images-list">
+                
+                <div class="order-images">
+                    {% for p in products %}
+
+                    <a href ="{% url 'product' item.slug %}">
+                        <img class="order-img"  src="{{ item.img.url }}" alt="{{ item.img.url }}">
+                    </a>
+                </div>
+                
+            </div>
+            
+        </div>
+    </a>
+</div>
+
+{% endblock %}

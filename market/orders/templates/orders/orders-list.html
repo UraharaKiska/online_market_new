@@ -1,0 +1,45 @@
+{% extends 'product/base.html' %}
+{% load static %}
+
+{% block content %}
+<link type="text/css" href="{% static 'orders/css/orders-style.css' %}" rel="stylesheet" />
+
+
+<header class="orders-header">
+    <h2>My Orders</h2>
+</header>
+<div class="orders-list">
+    {% for o in orders %}
+    <a href="#">      
+        <div class="order-card">
+            <div class="head-order-card">
+                <div class="order-date">
+                    {{ o.date_create }}
+                </div>
+                <div class="order-status">
+                    Status: {{ o.status }}
+                </div>
+            </div>
+            <div class="order-number">
+                <h4>Order number: {{ o.full_order_id }}</h4>
+            </div>
+            <div class="orders-images-list">
+                {% for key, value in products.items %}
+                {% if key == o.full_order_id %}
+                {% for name, item in value.items %}
+                <div class="order-images">
+                    <a href ="{% url 'product' item.slug %}">
+                        <img class="order-img"  src="{{ item.img.url }}" alt="{{ item.img.url }}">
+                    </a>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+            </div>
+            
+        </div>
+    </a>
+        {% endfor %}
+</div>
+
+{% endblock %}
