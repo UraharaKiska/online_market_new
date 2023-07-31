@@ -10,6 +10,7 @@
     <link type="text/css" href="{% static 'product/css/product-page.css' %}" rel="stylesheet" />
     <link type="text/css" href="{% static 'users/css/form-style.css' %}" rel="stylesheet" />
     <link type="text/css" href="{% static 'basket/css/cart-style.css' %}" rel="stylesheet" />
+    <link type="text/css" href="{% static 'product/css/paginator.css' %}" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
@@ -54,6 +55,36 @@
     
         {% block content %}
         {% endblock %}
+
+{% if page_obj.has_other_pages %}
+    <nav class="paginator">
+        <ul class="paginator-list">
+            {% if page_obj.has_previous %}
+            <li class="page-num">
+                <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+            </li>
+            {% endif %}
+            {% for p in paginator.page_range %}
+            {% if page_obj.number == p %}
+            <li class="page-num page-num-selected">
+                <div class="page-selected">{{ p }}</div>
+            </li>
+            {% elif p >= page_obj.number|add:-1 and p <= page_obj.number|add:1 %}
+            <li class="page-num">
+                <a href="?page={{ p }}">{{ p }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+            <li class="page-num">
+                <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
+
+    
     
 </body>
 </html>

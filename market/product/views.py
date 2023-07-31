@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, FormView
 from django.shortcuts import render, redirect, get_object_or_404
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import *
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 
@@ -33,18 +33,18 @@ def AboutPage(request):
 
 
 class ProductListShow(ListView):
-    paginate_by = 5
+    paginate_by = 4
     model = Product
     template_name = 'product/content.html'
     context_object_name = "products"
 
     
     def get_queryset(self):
-        return ProductPhoto.objects.select_related('id_product').distinct('id_product')
+        return ProductPhoto.objects.select_related('id_product').order_by('-id_product__id', 'id_product__date_create').distinct('id_product')
     
-    
+   
 class ProductType(ListView):
-    paginate_by = 5
+    paginate_by = 4
     model = Product_type
     template_name = "product/content.html"
     context_object_name = 'products'

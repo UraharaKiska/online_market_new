@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.contrib import messages
 from django.shortcuts import redirect
-
-from product.models import ProductPhoto
+from django.db.models import  F
+from product.models import ProductPhoto, Product
 from .models import *
 from basket.models import *
 from django.contrib.auth.decorators import login_required
@@ -82,6 +82,8 @@ def confirm_order(request):
     for b in basket:
         add = Orders_inform(product=b.id_product, count=b.quantity, full_order_id=full_order)
         add.save()
+        product = Product.objects.filter(id=b.id_product.id).update(count=F('count') - b.quantity)
+        
     
     basket.delete()
     messages.success(request, 'Order successfully confirmed')
