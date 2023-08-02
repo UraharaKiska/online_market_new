@@ -1,0 +1,135 @@
+.order-inform {
+   display: inline-block;
+   margin-left: 150px;
+}
+
+
+.order-list {
+    display: block;
+    /* width: 90%; */
+    height: 600px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin: auto;
+}
+
+
+.order-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+
+
+
+.order-top {
+    display: flex;
+    flex-direction: row;
+    margin-left: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.order-status {
+    margin-left: 50px;
+    font-size: 20px;
+    padding: 5px;
+
+
+}
+
+.total-price__order {
+    font-size: 25px;
+
+}
+
+.product-in-order {
+    display: flex;
+    max-width: 500px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right: 10px;
+}
+
+.product-img {
+    display: flex;
+    justify-content: center;
+    max-height: 200px;
+    max-width: 200px;
+    min-width: 200px;
+}
+
+.product-img > img {
+    height: 100%;
+}
+
+
+.product-price__order {
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+
+}
+
+.product-name__order {
+    font-size: 20px;
+    margin-top: 10px; 
+    margin-bottom: 10px;
+
+}
+
+.product-count__order {
+    font-size: 17px;
+    display: block;
+    margin-bottom: 20px;
+
+}
+
+.leave-review {
+    display: inline-block;
+    text-align: center;
+    padding-top: 7px;
+    font-size: 20px;
+    height: 30px;
+    width: 200px;
+    border-radius: 5px;
+    background-color: rgb(245, 183, 247);
+    color: rgb(0, 0, 0);
+    font-weight: 500;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+
+
+@media (max-width: 700px) {
+    .order-inform {
+        margin-left: 10px
+
+    }
+
+    .total-price__order {
+        font-size: 18px;
+    }
+
+    .order-status {
+        font-size: 17px;
+
+    }
+    
+    .product-name__order {
+        font-size: 15px;
+
+
+    }
+
+}

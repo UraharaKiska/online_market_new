@@ -10,7 +10,7 @@
 </header>
 <div class="orders-list">
     {% for o in orders %}
-    <a href="#">      
+    <a href="{{ o.get_absolute_url }}">      
         <div class="order-card">
             <div class="head-order-card">
                 <div class="order-date">

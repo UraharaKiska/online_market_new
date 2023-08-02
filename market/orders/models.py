@@ -1,8 +1,9 @@
 from django.db import models
 from users.models import CustomUser
 from product.models import Product
-from django.db.models import Q
+from django.db.models import Q, F
 # Create your models here.
+from django.urls import reverse
 
 
 
@@ -26,8 +27,11 @@ class Orders_data(models.Model):
     status = models.ForeignKey(Order_status_types, verbose_name="status", on_delete=models.CASCADE, default=3)
     date_create = models.DateTimeField(auto_now_add=True) 
     date_update = models.DateTimeField(auto_now=True)
+    total_price = models.IntegerField(default=0, blank=True)
     
     
+    def get_absolute_url(self):
+        return reverse('my_order', kwargs={'order_slug': self.full_order_id})
     
     
     def save(self, *args, **kwargs):
@@ -58,12 +62,20 @@ class Orders_inform(models.Model):
     product = models.ForeignKey(Product, verbose_name="product", on_delete=models.CASCADE)
     count = models.IntegerField(verbose_name="count")
     full_order = models.ForeignKey(Orders_data, to_field='full_order_id', verbose_name="order id", on_delete=models.CASCADE)
+    price_for_one = models.IntegerField(default=0, blank=True)
     
     def __str__(self):
         return self.full_order.full_order_id
 
-    
-
+    def save(self, *args, **kwargs):
+        product = Product.objects.get(id=self.product.id)
+        new_price = product.new_price
+        old_price = product.old_price
+        self.price_for_one = new_price if new_price else old_price
+        order = Orders_data.objects.filter(full_order_id=self.full_order).update(total_price = F('total_price') + self.count * self.price_for_one)
+        super().save(*args, **kwargs)
+        
+        
     class Meta:
         constraints = [
             models.CheckConstraint(

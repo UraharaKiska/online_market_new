@@ -8,7 +8,7 @@ from basket.models import *
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib.messages.views import SuccessMessageMixin
-
+from django.http import Http404
 # Create your views here.
 hui = {}
 # for ord in orders:
@@ -32,8 +32,7 @@ def orders_list_show(request):
             products[ord.full_order_id][i.product]['img'] = p.photo
             products[ord.full_order_id][i.product]['slug'] = p.id_product.slug
             
-            
-    print(products)
+  
 
     context = {
         'orders': orders,
@@ -88,4 +87,38 @@ def confirm_order(request):
     basket.delete()
     messages.success(request, 'Order successfully confirmed')
     return redirect('home')
+ 
     
+@login_required          
+def my_order_show(request, order_slug):
+    order = Orders_data.objects.filter(full_order_id=order_slug).first()
+    if order is None or order.user != request.user:
+        raise Http404('Order not found')
+    products = {}
+    prod = Orders_inform.objects.filter(full_order=order.full_order_id).select_related('product')
+    
+    for i in prod:
+        p = ProductPhoto.objects.filter(id_product=i.product).select_related('id_product').first()
+        products[i.product] = {}
+        products[i.product]['img'] = p.photo
+        products[i.product]['price'] = i.price_for_one
+        products[i.product]['count'] = i.count
+        
+        
+
+    
+    total_price = order.total_price
+    order_status = order.status
+    
+        
+    context = {
+        'products': products,
+        'total_price': total_price,
+        'order_status': order_status,
+    }
+         
+    print(products)
+    print(total_price)
+
+    return render(request, 'orders/my_order.html', context)
+        

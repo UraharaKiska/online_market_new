@@ -1,0 +1,49 @@
+{% extends 'product/base.html' %}
+{% load static %}
+
+{% block content %}
+<link type="text/css" href="{% static 'orders/css/my-order-style.css' %}" rel="stylesheet" />
+
+<div class="order-inform">
+    <div class="order-header">
+        <div class="order-top">
+            <div class="total-price__order">
+                Total price {{ total_price }}
+            </div>
+            <div class="order-status">
+                {{ order_status }}
+            </div>
+        </div>
+    </div>
+    <div class="order-list">
+
+        {% for key, value in products.items %}
+        <div class="product-in-order">
+            <div class="product-img">
+                <img src="{{ value.img.url }}" alt="{{ value.img.url }}">
+            </div>
+            <div class="product-info">
+                <div class="productinfo__upper">
+                    <div class="product-price__order">
+                        {{ value.price }}
+                    </div>
+                    <div class="product-name__order">
+                        {{ key }}
+                    </div>
+                </div>
+                <div class="product-info__bottom">
+                    <a class="leave-review" href="#">
+                        Leave the review
+                    </a>
+                    <div class="product-count__order">
+                        Count: {{ value.count }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+      
+</div>
+
+{% endblock %}
