@@ -15,5 +15,6 @@ urlpatterns = [
     path('product_type/<slug:product_type_slug>', ProductType.as_view(), name='product_type'),
     
     
+    
 ]
 

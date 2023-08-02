@@ -3,7 +3,7 @@
 
 
 {% block content %}
-
+<link type="text/css" href="{% static 'product/css/reviews.css' %}" rel="stylesheet" />
 
 
 {% for p in product %}
@@ -38,13 +38,55 @@
 
 
     <button class="card-btn">To cart</button>
+
+    <div class="reviews-count">All reviews: {{ reviews_count }}</div>
+    <div class="product-rating">rating: {{ rating }}</div>
     <div class="product-description">
-        <p class="description-title"> Description: </p>
-        <p class="description"> {{ p.id_product.description }}</p>
+        <p class="description" id="text"> {{ p.id_product.description }}</p>
+        <button class="show-all-text" id="btn">Show description</button>
+        <script>
+            window.onload = function() {
+                btn = document.getElementById('btn');
+                text = document.getElementById('text');
+                btn.onclick = function (){
+                    
+                text.classList.toggle('open');
+                }
+            }
+        </script>
     </div>
 </div>
 
     {% endif  %}
     {% endfor %}
     
-{% endblock %}
+
+    <div class="block-review">
+
+        <div class="reviews-list">
+            <hr>
+            
+            {% for r in reviews %}
+            <div class="review-show">
+                <div class="review-show_top">
+                    <div class="review-show_top-left">
+                    <p class="username-review">{{ r.user }}</p>
+                    <div class="user-review-rating">
+                        {% for i in r.rating %}
+                        <img class="review-star-img" src="{% static 'product/images/star1.png'%}" >
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="review-show_top-right">
+                    <p class="review-date">{{ r.date_create }} </p>
+                </div>
+            </div>  
+            <p class="review-comment">{{ r.comment }}</p>
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
+</div>
+    
+
+    {% endblock %}

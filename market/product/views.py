@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import *
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-
+from reviews.models import *
 # Create your views here.
 
 
@@ -60,8 +60,23 @@ def show_product(request, product_slug):
     if len(product) == 0:
         raise Http404
     
+    reviews = Reviews.objects.filter(product=product[0].id_product)
+    reviews_count = len(reviews)
+    rating = 0.0
+    for r in reviews:
+        rating += r.rating
+        r.rating = list(i for i in range(0, r.rating))
+        print(r.rating)
+    if rating:
+        rating = round(float(rating) / reviews_count, 1)
+
+    
+    
     context = {
         'product': product,
+        'reviews': reviews,
+        'reviews_count': reviews_count,
+        'rating': rating,
     }
     
     return render(request, 'product/card.html', context)
