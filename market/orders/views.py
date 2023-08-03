@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
+from reviews.models import Reviews
 # Create your views here.
 hui = {}
 # for ord in orders:
@@ -95,18 +96,20 @@ def my_order_show(request, order_slug):
     if order is None or order.user != request.user:
         raise Http404('Order not found')
     products = {}
-    prod = Orders_inform.objects.filter(full_order=order.full_order_id).select_related('product')
-    
+    prod = Orders_inform.objects.filter(full_order=order.full_order_id).select_related('product').values('price_for_one', 'count', 'product__name')
+    # print(prod)
     for i in prod:
-        p = ProductPhoto.objects.filter(id_product=i.product).select_related('id_product').first()
-        products[i.product] = {}
-        products[i.product]['img'] = p.photo
-        products[i.product]['price'] = i.price_for_one
-        products[i.product]['count'] = i.count
-        
-        
+        p = ProductPhoto.objects.filter(id_product__name=i['product__name']).select_related('id_product').values('photo', 'id_product__slug').first()
+        review = 1 if Reviews.objects.filter(user=request.user, product__slug=p['id_product__slug']) else 0
+        products[i['product__name']] = {}
+        products[i['product__name']]['img'] =  p['photo']
+        products[i['product__name']]['slug'] = p['id_product__slug']
+        products[i['product__name']]['price'] = i['price_for_one']
+        products[i['product__name']]['count'] = i['count']
+        products[i['product__name']]['review'] = review
 
-    
+           
+
     total_price = order.total_price
     order_status = order.status
     
@@ -115,6 +118,8 @@ def my_order_show(request, order_slug):
         'products': products,
         'total_price': total_price,
         'order_status': order_status,
+        'subject': order,
+        'review': review,
     }
          
     print(products)

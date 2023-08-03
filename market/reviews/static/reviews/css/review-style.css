@@ -1,0 +1,113 @@
+
+.rating-area {
+    display: inline-block;
+	overflow: hidden;
+	width: 130px;
+
+    /* text-align: center; */
+    padding: 7px;
+	
+}
+.rating-area:not(:checked) > input {
+	display: none;
+}
+
+.rating-area:not(:checked) > label {
+	float: right;
+	width: 25px;
+	padding: 0;
+	cursor: pointer;
+	font-size: 25px;
+	line-height: 25px;
+	color: lightgrey;
+	text-shadow: 1px 1px #bbb;
+}
+.rating-area:not(:checked) > label:before {
+	content: '★';
+}
+.rating-area > input:checked ~ label {
+	color: gold;
+	text-shadow: 1px 1px #c60;
+}
+.rating-area:not(:checked) > label:hover,
+.rating-area:not(:checked) > label:hover ~ label {
+	color: gold;
+}
+.rating-area > input:checked + label:hover,
+.rating-area > input:checked + label:hover ~ label,
+.rating-area > input:checked ~ label:hover,
+.rating-area > input:checked ~ label:hover ~ label,
+.rating-area > label:hover ~ input:checked ~ label {
+	color: gold;
+	text-shadow: 1px 1px goldenrod;
+}
+.rate-area > label:active {
+	position: relative;
+}
+
+
+
+.review-body {
+    display: flex;
+    justify-content: center;
+}
+
+.rating-space {
+    display: flex;
+    margin-top: 20px;
+}
+
+.placeholder-rating {
+    display: block;
+    padding: 10px;
+}
+
+.review-comment {
+    margin-top: 20px;
+
+}
+
+.review-comment__textarea {
+    resize: none;
+    width: 600px;
+    border: 1px solid;
+    border-radius: 7px;
+    padding: 10px;
+
+}
+
+.submit-review {
+    display: flex;
+    justify-content: center;
+}
+
+.submit-review > input {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 20px;
+    width: 150px;
+    border: none;
+    border-radius: 4px;
+    background-color: rgb(48, 157, 161);
+    color: white;
+
+}
+
+.submit-review > input:hover {
+    cursor: pointer;
+}
+
+
+
+@media (max-width: 700px){
+    .review-comment__textarea {
+
+        width: 300px;
+
+    }
+
+
+}
+
+
+
+

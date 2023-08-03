@@ -57,6 +57,8 @@ class Orders_data(models.Model):
             )
         ]
            
+
+    
     
 class Orders_inform(models.Model):
     product = models.ForeignKey(Product, verbose_name="product", on_delete=models.CASCADE)
@@ -83,4 +85,5 @@ class Orders_inform(models.Model):
                 name = 'check_product_count',
             )
         ]
-     
+    
+  

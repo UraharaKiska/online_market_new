@@ -1,0 +1,48 @@
+{% extends 'product/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<link type="text/css" href="{% static 'reviews/css/review-style.css' %}" rel="stylesheet" />
+
+
+<div class="review-header">
+    {{ product_name.name }}
+</div>
+
+
+<div class="review-body">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="rating-space">
+            <div class="placeholder-rating">
+                Rate the product
+            </div>
+            <div class="rating-area">
+                <input type="radio" id="star-5" name="rating" value="5">
+                <label for="star-5" title="Оценка «5»"></label>	
+                <input type="radio" id="star-4" name="rating" value="4">
+                <label for="star-4" title="Оценка «4»"></label>    
+                <input type="radio" id="star-3" name="rating" value="3">
+                <label for="star-3" title="Оценка «3»"></label>  
+                <input type="radio" id="star-2" name="rating" value="2">
+                <label for="star-2" title="Оценка «2»"></label>    
+                <input type="radio" id="star-1" name="rating" value="1">
+                <label for="star-1" title="Оценка «1»"></label>
+            </div>
+            
+        </div>
+            <p class="review-comment">
+            <textarea class="review-comment__textarea" id="textarea" name="comment" cols="30" rows="10" placeholder="Write something..."></textarea>
+       
+        </p>
+        <div class="submit-review">
+            <input type="submit" value="Leave the review">
+        </div>
+    </form>
+</div>
+
+
+
+
+{% endblock %}

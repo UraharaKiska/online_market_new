@@ -20,7 +20,7 @@
         {% for key, value in products.items %}
         <div class="product-in-order">
             <div class="product-img">
-                <img src="{{ value.img.url }}" alt="{{ value.img.url }}">
+                <img src="/media/{{ value.img }}" alt="{{ value.img }}">
             </div>
             <div class="product-info">
                 <div class="productinfo__upper">
@@ -32,9 +32,11 @@
                     </div>
                 </div>
                 <div class="product-info__bottom">
-                    <a class="leave-review" href="#">
+                    {% if not review %}
+                    <a class="leave-review" href="{% url 'leave_review' product_slug=value.slug %}">
                         Leave the review
                     </a>
+                    {% endif %}
                     <div class="product-count__order">
                         Count: {{ value.count }}
                     </div>
@@ -45,5 +47,7 @@
     </div>
       
 </div>
+
+
 
 {% endblock %}
