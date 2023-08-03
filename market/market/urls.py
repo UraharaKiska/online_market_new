@@ -12,7 +12,7 @@ urlpatterns = [
     path('cart/', include('basket.urls')),   
     path('', include('product.urls')),
     path('users/', include('users.urls')),
-    
+    path('api-auth/', include('apiload.urls')),
     
     # re_path(r'^oauth/', include('social_django.urls', namespace='social')),
     

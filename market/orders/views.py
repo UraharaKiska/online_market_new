@@ -10,6 +10,11 @@ from django.http import JsonResponse
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
 from reviews.models import Reviews
+from django.template.loader import render_to_string, get_template
+from django.core.mail import EmailMessage
+from users.models import CustomUser
+from config import EMAIL_USER
+from django.template import Context
 # Create your views here.
 hui = {}
 # for ord in orders:
@@ -71,7 +76,26 @@ def do_order(request):
     # print(photo)
     return render(request, 'orders/do-order.html', context)
 
+def send_email(user, total_price): 
+    subject = "You have order"
+    send_to = []
+    from_email = EMAIL_USER
+    user_email = CustomUser.objects.filter(username=user).values('email').first()
+    if user_email:
+        send_to.append(user_email['email'])
+    
+    context = {
+        'user': user,
+        'total_price': total_price,
+    }
 
+    
+    message = get_template('orders/order-email-signal.html').render(context)
+    msg = EmailMessage(subject, message, to=send_to, from_email=from_email)
+    msg.content_subtype = 'html'
+    msg.send()
+    
+    
 @login_required      
 def confirm_order(request):
     
@@ -87,6 +111,10 @@ def confirm_order(request):
     
     basket.delete()
     messages.success(request, 'Order successfully confirmed')
+    total_price = Orders_data.objects.filter(full_order_id=full_order).values('total_price').first()['total_price']
+    send_email(request.user, total_price)
+    
+    
     return redirect('home')
  
     
@@ -126,4 +154,6 @@ def my_order_show(request, order_slug):
     print(total_price)
 
     return render(request, 'orders/my_order.html', context)
+        
+        
         

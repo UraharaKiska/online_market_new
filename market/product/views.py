@@ -6,6 +6,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import *
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from reviews.models import *
+
 # Create your views here.
 
 
@@ -80,3 +81,4 @@ def show_product(request, product_slug):
     }
     
     return render(request, 'product/card.html', context)
+

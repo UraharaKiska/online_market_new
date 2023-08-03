@@ -1,19 +1,22 @@
--create users model +
--create user registration from +
--create user login form +
+-user
+    -profile +
+        -chage profile +
+    -reset pasword +
 
+-product
+    -filter ---
 
--create product model +
--create product_type model +
--create photo model +
--create product_view class or function +
+-cart
+    -add to cart +
+    -increment and decrement product +
+    -delete product +
+ 
+-order +
+    -create order +
+    -send email about create order +
 
+-review
+    -leave review +
 
-
--add review model -
--view review -
-
-
--load all data in json format 
 
 
