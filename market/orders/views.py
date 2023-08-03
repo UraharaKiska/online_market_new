@@ -128,7 +128,7 @@ def my_order_show(request, order_slug):
     # print(prod)
     for i in prod:
         p = ProductPhoto.objects.filter(id_product__name=i['product__name']).select_related('id_product').values('photo', 'id_product__slug').first()
-        review = 1 if Reviews.objects.filter(user=request.user, product__slug=p['id_product__slug']) else 0
+        review = 1 if len(Reviews.objects.filter(user=request.user, product__slug=p['id_product__slug'])) else 0
         products[i['product__name']] = {}
         products[i['product__name']]['img'] =  p['photo']
         products[i['product__name']]['slug'] = p['id_product__slug']
@@ -147,7 +147,7 @@ def my_order_show(request, order_slug):
         'total_price': total_price,
         'order_status': order_status,
         'subject': order,
-        'review': review,
+    
     }
          
     print(products)

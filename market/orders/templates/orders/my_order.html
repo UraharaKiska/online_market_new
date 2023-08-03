@@ -32,7 +32,8 @@
                     </div>
                 </div>
                 <div class="product-info__bottom">
-                    {% if not review %}
+                    {{ review }}
+                    {% if value.review == 0 %}
                     <a class="leave-review" href="{% url 'leave_review' product_slug=value.slug %}">
                         Leave the review
                     </a>

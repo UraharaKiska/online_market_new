@@ -22,8 +22,9 @@ def leave_review(request, product_slug):
         product = Product.objects.get(slug=product_slug)
         try:
             query = Reviews.objects.create(product=product, user=request.user, rating=rating, comment=comment)
-        except:
-            raise Http404("LOx")
+        except Exception as ex:
+            
+            raise Http404(ex)
         return redirect('orders')
         
     else:

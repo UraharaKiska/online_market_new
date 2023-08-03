@@ -52,3 +52,9 @@ class ProductPhoto(models.Model):
     def __str__(self):
             return self.id_product.name
 
+
+class Product_rating(models.Model):
+    product = models.OneToOneField(Product, related_name='rating', on_delete=models.CASCADE)
+    rating = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    
+    
