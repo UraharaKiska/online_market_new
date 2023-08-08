@@ -27,10 +27,6 @@ class RegisterUser(CreateView):
         login(self.request, user)
         return redirect('home')
 
-class LoginUser(LoginView):
-    form_class = LoginUserForm
-    template_name = 'users/login.html'
-
 
 def logout_user(request):
     logout(request)
@@ -41,10 +37,6 @@ class LoginUser(LoginView):
     form_class = LoginUserForm
     template_name = 'users/login.html'
 
-
-def logout_user(request):
-    logout(request)
-    return redirect('login')
 
 
 @login_required

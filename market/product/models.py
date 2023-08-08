@@ -44,7 +44,7 @@ class Product_type(models.Model):
         
 class ProductPhoto(models.Model):
     id_product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    photo = models.ImageField(upload_to="photo_product/%Y/%m/%d", null=True, verbose_name='photo')
+    photo = models.ImageField(upload_to="pения hoto_product/%Y/%m/%d", null=True, verbose_name='photo')
     date_add = models.DateTimeField(auto_now_add=True)
     date_update = models.DateTimeField(auto_now=True)
     
@@ -54,7 +54,7 @@ class ProductPhoto(models.Model):
 
 
 class Product_rating(models.Model):
-    product = models.OneToOneField(Product, related_name='rating', on_delete=models.CASCADE)
+    product = models.OneToOneField(Product,  on_delete=models.CASCADE, related_name='rating')
     rating = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     
     

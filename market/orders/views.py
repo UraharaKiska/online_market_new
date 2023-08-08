@@ -13,7 +13,7 @@ from reviews.models import Reviews
 from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMessage
 from users.models import CustomUser
-from config import EMAIL_USER
+from configuration import EMAIL_USER
 from django.template import Context
 # Create your views here.
 hui = {}

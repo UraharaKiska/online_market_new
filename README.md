@@ -36,7 +36,6 @@
 <p>
     В файле users/urls.py добавить следующие адреса:<br>
     <code>
-    
         path('password-reset-confirm/&ltuidb64&gt/&lttoken&gt/',
             auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'),<br>
             name='password_reset_confirm'),<br>
@@ -47,17 +46,20 @@
     </code>
 </p> 
 
-<p> <code>
-    class ResetPasswordView(SuccessMessageMixin, PasswordResetView):<br>
-    template_name = 'users/password-reset.html'<br>
-    email_template_name = 'users/password-reset-email.html'<br>
-    subject_template_name = 'users/password_reset_subject'<br>
-    success_message = "We've emailed you instructions for setting your password, " \<br>
-                      "if an account exists with the email you entered. You should receive them shortly." \<br>
-                      " If you don't receive an email, " \<br>
-                      "please make sure you've entered the address you registered with, and check your spam folder."<br>
-    success_url = reverse_lazy('home')<br>
-</code></p>
+<p> 
+    
+<code>
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    template_name = 'users/password-reset.html'
+    email_template_name = 'users/password-reset-email.html'
+    subject_template_name = 'users/password_reset_subject'
+    success_message = "We've emailed you instructions for setting your password, " \
+                      "if an account exists with the email you entered. You should receive them shortly." \
+                      " If you don't receive an email, " \
+                      "please make sure you've entered the address you registered with, and check your spam folder."
+    success_url = reverse_lazy('home')    
+</code>
+</p>
 
 
 
