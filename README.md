@@ -1,5 +1,113 @@
 # online_market
 
+<p>Этот проект я разрабатывал исключительно для повышения своих навыков в области  Django</p>
+
+<p>В проекте имеется 6 приложений(кроме той что с коробки - market): market, product, users, basket, orders, reviews, apiload.
+</p>
+
+<h4>Product</h4>
+<p>Это приложение необходимо для отоброжения и хранения всех товаров имеющихся в магазине. Доступен по url /', то что видят пользователт при переходе на странцу. 
+    Здесь имеются 3 модели: Product для хранения товаров, Product_type для хранения списка типов продуктов, ProductPhoto для хранения фотографий товаров,
+    Product_rating для храния средней оценки товаров от всех рпользователей.
+    <img src="">    
+</p>
+
+<p>В таблице "Product" 11 полей:<br>
+id - уникальный индентификатор,<br>
+name - наименование товара типа CharField, с максимальной длиной 255 символа,<br>
+slug - уникальный слаг для создания индивидуального url для каждого товара,<br>
+product_type - тип товара с внешним ключем ForeignKeyс таблицей "Product_type,<br>
+old_price - обычная цена товара типа IntegerField,<br>
+new_price - скидочная цена IntegerField, если таковая имеетя
+count - количество товаров на складеIntegerField,<br>
+description - описание товара TextField,<br>
+date_create - дата создания записи,<br>
+date_update - дата обновления записи,<br>
+available = BooleanField, True, если товар доступен для продажи,<br>
+</p>
+<p>ProductType имеет 3 поля:<br>
+id - уникальный индентификатор,<br>
+name - имя типа товара CherField,<br>
+slug - уникальный слаг типа товара,<br>
+</p>
+<p>В ProductPhoto 5 полей:<br>
+id - уникальный индентификатор,<br>
+id_product - внешний ключ к таблице "Product",<br>
+photo - путь к фотографии продукта типа ImageField,<br>
+date_add - дата добавления,<br>
+date_update - дата последнего изменения,<br> 
+</p>
+<p>"Product rating" имеет 3 поля:<br>
+id - уникальный индентификатор,<br>
+product - внешний ключ OneToOneField с таблицей "Product",<br>
+rating - рейтинг продукта DecimalField,<br>
+</p>
+
+<p>В product имеется 2 view: ProductList для отображения списка всех товаров, show_product для отображения странцы конкретного товара, доступный через '<slug:product_slug>/ </p>
+
+
+<h4>Users</h4>
+
+<p>Тут всего одна модель: CustomUser. В нем есть переопределеный метод "save" для сжатия фото пользователя преред сохранием на сервере </p>
+
+<p> CustomUser переопределенная модель от "AbstrctUser", помимо имеющихся моделй добавлены 3 поля:<br>
+    photo - хранит путь к фотографии пользователя,<br>
+    phone_number - поле для номера телефона,<br>
+    phoneNumberRegex - валидатор для поля "phone_number",<br>
+</p>
+<p>Список доступных url: /users/ + :<br>
+    <img src="">
+</p>
+
+<p>Есть 5 view:<br>
+    класс RegisterUser - для регистрации новых пользователей,<br>
+    класс LoginUser - для авторизации пользователей,<br>
+    logout_user - для выхода из системы,<br>
+    profile_updfdate - для редактирования профиля,<br> 
+    класс ResetPasswordView - для сброса пароля<br>
+</p>
+
+<h4>basket</h4>
+
+<p>Тут одна модель Shoping_cart c 7-ю полями:<br>
+id - уникальный индентификатор,<br>
+id_user - внешний ключ ForeignKey к таблице "CustomUser",<br>
+id_product - внешний ключ ForeignKey к таблице "Product",<br>
+quantity - количестов данных товаров в корзине с ограничением > 0<br>
+dete_crete - дата добавления записи,<br>
+date_update -  дата обновления записи,<br>
+</p>
+
+<p>В приложении 5 url: /cart/ + :<br>
+    <img src="">
+</p>
+<p>
+basket_view - для отбражения корзины,<br>
+basket_add - для добавления нового товара в корзину,<br>
+basket_delete - для удаления товара из корзины,<br>
+basket_increment_count - для увеличения количества определенного товара в корзине,<br>
+basket_decrement_count - для уменьшения количества определенного товара в корзине,<br>
+</p>
+
+<h4>Orders</h4>
+
+<p>
+В этом приложении есть 3 модели: Order_data, Orders_inform, Orders_status_types<br>
+Order_data содержит 8 полей:<br>
+id - уникальный индентификатор,<br>
+user - ForeignKey к таблице "CustomUser",<br>
+personal_order_id - номер по счету заказ для данного пользователя,<br>
+full_order_id - полный уникальный индентификатор заказа,<br>
+status - внешний ключ статуса заказа к таблице "Orders_status_types",<br>
+date_create - дата создания записи,<br>
+date_update - дата обновления записи,<br>
+total_price - полная стоимость заказа,<br>
+
+</p>
+
+
+
+
 
 
 
