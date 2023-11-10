@@ -39,6 +39,10 @@
                                 <a class="user-login" href ="{% url 'lk' %}">{{ user.username }}</a>
                                 <a class="logout-href" href ="{% url 'logout' %}">Log out</a>
                             {% else %}
+                                <a class="cart-href" href ="{% url 'basket' %}">cart</a>
+                                <a class="orders" href="{% url 'orders' %}">Orders</a>
+
+                                <a class="user-login" href ="{% url 'lk' %}">{{ user.username }}</a>
                                 <a class="signup-href" href ="{% url 'register' %}">Sign Up</a>
                                 <a class="login-href" href ="{% url 'login' %}">Log In</a>
                             {% endif %}

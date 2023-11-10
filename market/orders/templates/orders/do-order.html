@@ -27,14 +27,26 @@
         <div class="confirm-order">
             <div class="confirm-order__total-price">
                 Total price: {{ total_price }} 
-            </div>
+            {% comment %} </div>
             <a href="{% url 'confirm-order' %}">
                 <div class="confirm-order__yes">
                     Order
                 </div>
-            </a>
+            </a> {% endcomment %}
         </div>
 </div>
+
+<form method="POST">
+    {% csrf_token %}
+    {% for f in form %}
+    <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}:</label>
+    {{ f }}
+    <div class="form-error">{{ f.errors }}</div>
+    {% endfor %}
+    {% comment %} <a href="{% url 'password_reset' %}"><i>Forgot Password?</i></a> {% endcomment %}
+    {% comment %} <a href="{% url 'social:begin' 'github' %}" class="github-login">Sign in with GitHub</a> {% endcomment %}
+    <button class="form-button" type="submit">Confirm order</button>
+</form>
 
 
 

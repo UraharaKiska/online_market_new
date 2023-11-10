@@ -20,6 +20,11 @@ class CustomUserCreationForm(UserCreationForm):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
         del self.fields['password2']
 
+    # def clean_password2(self):
+    #     cd = self.cleaned_data
+    #     if cd['password'] != cd['password2']:
+    #         raise forms.ValidationError('Passwords don\'t match.')
+    # return cd['password2']
 
 class UpdateUserForm(forms.ModelForm):
     username = forms.CharField(label='Login', widget=forms.TextInput(attrs={'class': 'form-profile-data'}))
@@ -43,7 +48,7 @@ class UpdateUserForm(forms.ModelForm):
         fields = ['photo', 'username', 'first_name','email',  'phone_number']
 
 
-class LoginUserForm(AuthenticationForm):
+class LoginUserForm(forms.Form):
     username = forms.CharField(label='Login', widget=forms.TextInput(attrs={'class': 'form-input'}))
     password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
 

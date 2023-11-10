@@ -6,10 +6,31 @@ from configuration import *
 
 # Application definition
 
-try:
-    from .local_settings import *
-except ImportError:
-    from .prod_settings import *
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+SECRET_KEY = "skjdcnsmdcwopewer34-werd32wefcesd-fmxmzmkapsidi039293022-d-2xdescdcnamamdmJKD"
+
+DEBUG = True
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        'NAME': DB_NAME,
+        'USER': LOGIN,
+        'PASSWORD': PASS,
+        'HOST': HOST,
+        # 'PORT': PORT,
+    }
+}
+
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = []
+
+
 
 INSTALLED_APPS = [
     'social_django',
@@ -28,6 +49,7 @@ INSTALLED_APPS = [
     'apiload.apps.ApiloadConfig',
     'django_cleanup.apps.CleanupConfig',
     'rest_framework',
+    'reset_migrations',
 
     
     # 'users.apps.UsersConfig',
@@ -124,16 +146,16 @@ LOGIN_URL = '/users/login'
 
 
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.github.GithubOAuth2',
-    'social_core.backends.google.GoogleOAuth2',
+    # 'social_core.backends.github.GithubOAuth2',
+    # 'social_core.backends.google.GoogleOAuth2',
 
     'django.contrib.auth.backends.ModelBackend',
 )
 
 
 
-SOCIAL_AUTH_GITHUB_KEY = GITHUB_KEY
-SOCIAL_AUTH_GITHUB_SECRET = GITHUB_SECRET_KEY
+# SOCIAL_AUTH_GITHUB_KEY = GITHUB_KEY
+# SOCIAL_AUTH_GITHUB_SECRET = GITHUB_SECRET_KEY
 
 # SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_CONTENT_TYPE_NOSNIFF = False
@@ -152,7 +174,9 @@ EMAIL_HOST_USER = EMAIL_USER
 EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-SERVER_EMAIL = EMAIL_HOST_USER
+# SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
 
+
+CART_SESSION_ID = 'cart'
 

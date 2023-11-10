@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
-from django.contrib.auth import logout, login
+from django.contrib.auth import logout, login, authenticate
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -10,6 +10,9 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 from .forms import CustomUserCreationForm, LoginUserForm, UpdateUserForm
 from .models import CustomUser
+from basket.cart import Cart
+from basket.views import basket_add_session
+import copy
 
 class RegisterUser(CreateView):
     form_class = CustomUserCreationForm
@@ -24,8 +27,16 @@ class RegisterUser(CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        login(self.request, user)
-        return redirect('home')
+        # cart = Cart(request).copy
+        # login(self.request, user)
+        return redirect('login')
+
+
+# def reister(request):
+#     if request.method == 'POST':
+#         user_form = CustomUserCreationForm(request.POST)
+#         if user_form.is_valid():
+#             new_user = user_form.save(commit=False)
 
 
 def logout_user(request):
@@ -33,9 +44,41 @@ def logout_user(request):
     return redirect('login')
 
 
-class LoginUser(LoginView):
-    form_class = LoginUserForm
-    template_name = 'users/login.html'
+
+def login_user(request):
+    if request.method == 'POST':
+        form = LoginUserForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(request,
+                                username=cd['username'],
+                                password=cd['password'])
+            # print(cd['password'])
+            # print(cd['p'])
+
+
+            if user is not None:
+                cart = Cart(request)
+                session_cart = []
+                cart.clear()
+                # for c in cart:
+                #     print(c)
+                # print(session_cart)
+                
+                login(request, user)
+                basket_add_session(request, cart)
+                return redirect('home')
+            else: 
+                # messages.error(request, 'IDI NA HUI')
+                # print('HUUUUUUUUUI')
+                return render(request, 'users/login.html', {'form': form})
+
+    else:
+        form = LoginUserForm()
+        return render(request, 'users/login.html', {'form': form})
+
+
+
 
 
 
@@ -50,7 +93,6 @@ def profile_update(request):
             messages.success(request, 'Your profile is updated successfully')
             # print(user_form.username)
             return redirect('lk')
-
     else:
         user_form = UpdateUserForm(instance=request.user)
 

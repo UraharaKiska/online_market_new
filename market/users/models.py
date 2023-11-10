@@ -9,9 +9,12 @@ class CustomUser(AbstractUser):
     phoneNumberRegex = RegexValidator(regex=r"^\+?1?\d{8,15}$")
     phone_number = models.CharField(validators=[phoneNumberRegex], max_length=16, null=True, unique=True, blank=True)
 
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         if self.photo:
             self.photo = make_thumbnail(self.photo, self.username)
             super().save(*args, **kwargs)
    
+    # def __str__(self):
+    #     return f'Profile of {self.username}'

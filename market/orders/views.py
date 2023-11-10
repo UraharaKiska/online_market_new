@@ -15,21 +15,29 @@ from django.core.mail import EmailMessage
 from users.models import CustomUser
 from configuration import EMAIL_USER
 from django.template import Context
+from .forms import *
+from .tasks import send_email
+
+
 # Create your views here.
 hui = {}
 # for ord in orders:
-#     products[ord.full_order_id] = Orders_inform.objects.filter(full_order=ord.full_order_id).select_related('product')
+#     products[ord.full_order_id] = Orders_item.objects.filter(full_order=ord.full_order_id).select_related('product')
 #     hui[ord.full_order_id] = []
 #     for i in range(0, len(products[ord.full_order_id])):
 #         hui[ord.full_order_id].append(products[ord.full_order_id][i].product)
 
 
-@login_required      
+# @login_required      
 def orders_list_show(request):
-    orders = Orders_data.objects.filter(user__username=request.user)
+
+    orders = Orders.objects.filter(user__username=request.user)
     products = {}
+    print(orders)
     for ord in orders:
-        prod = Orders_inform.objects.filter(full_order=ord.full_order_id).select_related('product')
+        # print(orders)
+
+        prod = Orders_Item.objects.filter(full_order=ord.full_order_id).select_related('product')
         products[ord.full_order_id] = {}
 
         for i in prod:
@@ -39,22 +47,52 @@ def orders_list_show(request):
             products[ord.full_order_id][i.product]['slug'] = p.id_product.slug
             
   
-
+    # print(products)
     context = {
         'orders': orders,
         'products': products,
     }
 
     # print(products)
-
-
     return render(request, 'orders/orders-list.html', context)
 
 
+    
 
 @login_required      
 def do_order(request):
+    if request.method == "POST":
+        form = AddressForm(request.POST)
+        if form.is_valid():
+            address = form.cleaned_data
+            basket = Shoping_cart.objects.filter(id_user=request.user).select_related('id_product')
+            order = Orders(user=request.user,
+                           first_name=address['first_name'],
+                           second_name=address['second_name'],
+                           city=address['city'],
+                           postal_code=address['postal_code'],
+                           address=address['address'])
+            order.save()
+            full_order = Orders.objects.filter(user=request.user).last().full_order_id
+            for b in basket:
+                add = Orders_Item(product=b.id_product, count=b.quantity, full_order_id=full_order)
+                add.save()
+                product = Product.objects.filter(id=b.id_product.id).update(count=F('count') - b.quantity)
+                
+            basket.delete()
+            messages.success(request, 'Order successfully confirmed')
+            total_price = Orders.objects.filter(full_order_id=full_order).values('total_price').first()['total_price']
+            send_email.delay(order.id)
+            print(total_price)
+            # send_email(request.user, total_price)
+            return redirect('home')
+
+    address_form = AddressForm(instance=request.user)
     basket = Shoping_cart.objects.filter(id_user=request.user).values('id_product__name', 'quantity', 'id_product__old_price', 'id_product__new_price')
+    print(basket.count())
+
+    if basket.count() == 0:
+        return redirect('home')
     photo = {}
     total_price = 0
     for key in basket:
@@ -64,67 +102,69 @@ def do_order(request):
         else:
             total_price += key['id_product__old_price'] *  key['quantity']
             
-         
+        
     
     context = {
         'products': basket,
         'photo': photo,
         'total_price': total_price,
-        
+        'form': address_form,
+   
     }
+        
+
     
     # print(photo)
     return render(request, 'orders/do-order.html', context)
 
-def send_email(user, total_price): 
-    subject = "You have order"
-    send_to = []
-    from_email = EMAIL_USER
-    user_email = CustomUser.objects.filter(username=user).values('email').first()
-    if user_email:
-        send_to.append(user_email['email'])
+# def send_email(user, total_price): 
+#     subject = "You have order"
+#     send_to = []
+#     from_email = EMAIL_USER
+#     user_email = CustomUser.objects.filter(username=user).values('email').first()
+#     if user_email:
+#         send_to.append(user_email['email'])
     
-    context = {
-        'user': user,
-        'total_price': total_price,
-    }
+#     context = {
+#         'user': user,
+#         'total_price': total_price,
+#     }
 
     
-    message = get_template('orders/order-email-signal.html').render(context)
-    msg = EmailMessage(subject, message, to=send_to, from_email=from_email)
-    msg.content_subtype = 'html'
-    msg.send()
+#     message = get_template('orders/order-email-signal.html').render(context)
+#     msg = EmailMessage(subject, message, to=send_to, from_email=from_email)
+#     msg.content_subtype = 'html'
+#     msg.send()
     
     
-@login_required      
-def confirm_order(request):
+# @login_required      
+# def confirm_order(request):
     
-    basket = Shoping_cart.objects.filter(id_user=request.user).select_related('id_product')
-    order = Orders_data(user=request.user)
-    order.save()
-    full_order = Orders_data.objects.filter(user=request.user).last().full_order_id
-    for b in basket:
-        add = Orders_inform(product=b.id_product, count=b.quantity, full_order_id=full_order)
-        add.save()
-        product = Product.objects.filter(id=b.id_product.id).update(count=F('count') - b.quantity)
+#     basket = Shoping_cart.objects.filter(id_user=request.user).select_related('id_product')
+#     order = Orders(user=request.user)
+#     order.save()
+#     full_order = Orders.objects.filter(user=request.user).last().full_order_id
+#     for b in basket:
+#         add = Orders_Item(product=b.id_product, count=b.quantity, full_order_id=full_order)
+#         add.save()
+#         product = Product.objects.filter(id=b.id_product.id).update(count=F('count') - b.quantity)
         
+#     basket.delete()
+#     messages.success(request, 'Order successfully confirmed')
+#     total_price = Orders.objects.filter(full_order_id=full_order).values('total_price').first()['total_price']
+#     # send_email(request.user, total_price)
     
-    basket.delete()
-    messages.success(request, 'Order successfully confirmed')
-    total_price = Orders_data.objects.filter(full_order_id=full_order).values('total_price').first()['total_price']
-    send_email(request.user, total_price)
     
-    
-    return redirect('home')
+#     return redirect('home')
  
     
-@login_required          
+# @login_required          
 def my_order_show(request, order_slug):
-    order = Orders_data.objects.filter(full_order_id=order_slug).first()
+    order = Orders.objects.filter(full_order_id=order_slug).first()
     if order is None or order.user != request.user:
         raise Http404('Order not found')
     products = {}
-    prod = Orders_inform.objects.filter(full_order=order.full_order_id).select_related('product').values('price_for_one', 'count', 'product__name')
+    prod = Orders_Item.objects.filter(full_order=order.full_order_id).select_related('product').values('price_for_one', 'count', 'product__name')
     # print(prod)
     for i in prod:
         p = ProductPhoto.objects.filter(id_product__name=i['product__name']).select_related('id_product').values('photo', 'id_product__slug').first()

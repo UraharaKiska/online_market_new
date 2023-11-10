@@ -18,11 +18,17 @@
                     <div class="cart-header__count">Count</div>
                     <div class="cart-header__price">Price</div>
                 </header>
+             
                 {% for p in products %}
                 <section class="product-cart">
                     <div class="product-cart__img">
                         <div class="tags">
-                            {% getphoto p.id_product as photo %}
+                            {% if request.user.is_authenticated %}
+                                {% getphoto p.id_product as photo %}
+                            {% else %}
+                                {% getphoto p.product.id as photo %}
+                            {% endif %}
+
                         </div>
                         <img class="image-cart-product" src = "{{ photo.photo.0.photo.url }}" alt="{{ photo.photo.0.photo.url }}">
                     </div>
@@ -39,12 +45,12 @@
                                 </div>
                             </div>
                             <div class="count__controls">
-                                <a href="{% url 'increment' p.id_product.id %}">
+                                <a href="{% if request.user.is_authenticated %} {% url 'increment' p.id_product.id %} {% else %}  {% url 'increment' p.product.id %} {% endif %}">
                                     <button type="button" class="count__up">
                                         +
                                     </button>
                                 </a>
-                                <a href="{% url 'decrement' p.id_product.id %}">
+                                <a href="{% if request.user.is_authenticated %} {% url 'decrement' p.id_product.id %} {% else %}  {% url 'decrement' p.product.id %} {% endif %}">
                                     <button class="count__down">
                                         -
                                     </button>
@@ -58,21 +64,26 @@
                     </div>
                     <div class="product-cart__price" id="price{{forloop.counter}}">
                         <script>
-                            var old_price = "{{ p.id_product.old_price }}";
-                            var new_price = "{{ p.id_product.new_price }}";
-                            var count = "{{ p.quantity }}";
                             var total_price = 0;
-                            if (new_price !== "None") {
-                                total_price = count * new_price;
-                            }
-                            else {
-                                total_price = count * old_price;
-                            }
+                           
+                            {% if request.user.is_authenticated%}
+                                var old_price = "{{ p.id_product.old_price }}";
+                                var new_price = "{{ p.id_product.new_price }}";
+                                var count = "{{ p.quantity }}";
+                                if (new_price !== "None") {
+                                    total_price = count * new_price;
+                                }
+                                else {
+                                    total_price = count * old_price;
+                                }
+                            {% else %}
+                            {% endif %}
+
                             document.getElementById("price{{forloop.counter}}").innerHTML = total_price;
                         </script>
                     </div>
                     <div class="product-cart__controls">
-                        <a href="{% url 'basket_delete' p.id_product.id %}" class="basket-delete">
+                        <a href="{% if request.user.is_authenticated %} {% url 'basket_delete' p.id_product.id %} {% else %}  {% url 'basket_delete' p.product.id %} {% endif %}" class="basket-delete">
                             <img class="delet-product" src="{% static 'basket/images/delete.png' %}">
                         </a>
                             
@@ -80,6 +91,7 @@
                     </div>
                 </section>
                 {% endfor %}
+               
                
                 
 
@@ -89,29 +101,36 @@
                         
                     </div>
                     <div class="cart-footer__price" id="total-price">
-                        <script>
-                            var count = 0;
-                            var total_price = 0;
-                            var new_price = 0;
-                            {% for p in products %}
-                                count = count + {{ p.quantity}}
-                                new_price = "{{ p.id_product.new_price}}"
-                                if (new_price == "None")
-                                    total_price = total_price + {{ p.quantity }} * {{ p.id_product.old_price }}
-                                else
-                                    total_price = total_price + {{ p.quantity }} * {{ p.id_product.new_price }}
-
-                            {% endfor %}
-                            document.getElementById("total-count").innerHTML = count;
-                            document.getElementById("total-price").innerHTML = total_price;
-                            
-                        </script>
+                       
                     </div>
-                    <div class="cart-footer__order">
+                    <div class="cart-footer__order" id="cart-footer__order">
                         <a href="{% url 'do-order' %}">Order</a>
                     </div>
                 </footer>
+                <script>
+                    var count = 0;
+                    var total_price = 0;
+                    var new_price = 0;
+                    {% for p in products %}
+                        count = count + {{ p.quantity}}
+                        new_price = "{{ p.id_product.new_price}}"
+                        if (new_price == "None")
+                            total_price = total_price + {{ p.quantity }} * {{ p.id_product.old_price }}
+                        else
+                            total_price = total_price + {{ p.quantity }} * {{ p.id_product.new_price }}
 
+                    {% endfor %}
+                   
+                    if (count != 0) {
+                        document.getElementById("total-count").innerHTML = count;
+                        document.getElementById("total-price").innerHTML = total_price;
+                    } 
+                    else {
+                        document.getElementById('cart-footer__order').style.display = 'none';
+                    }
+
+                   
+                </script>
             </section>
         </div>
     </div>
